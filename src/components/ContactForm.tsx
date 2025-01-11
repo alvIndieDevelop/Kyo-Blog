@@ -32,7 +32,9 @@ export default function ContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      const result = await sendEmail(data);
+      const result = await sendEmail(
+        data as { name: string; email: string; message: string }
+      );
       if (result.success) {
         toast({
           title: "Message sent!",
@@ -42,7 +44,7 @@ export default function ContactForm() {
       } else {
         throw new Error("Failed to send message");
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to send message. Please try again later.",
