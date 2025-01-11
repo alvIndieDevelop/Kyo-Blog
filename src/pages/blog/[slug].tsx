@@ -81,10 +81,10 @@ export default function BlogPost({
                 <Tag className="w-4 h-4" />
                 {post.tags.map((tag) => (
                   <span
-                    key={tag}
+                    key={tag.id}
                     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                   >
-                    {tag}
+                    {tag.name}
                   </span>
                 ))}
               </div>
@@ -100,19 +100,6 @@ export default function BlogPost({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const ns = new NotionService();
-  const posts = await ns.getPublishedBlogPosts();
-  const paths = posts.map((post) => {
-    return `/blog/${post.slug}`;
-  });
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-};
-
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const ns = new NotionService();
   const post = await ns.getSingleBlogPost(params?.slug as string);
@@ -126,5 +113,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       markdown: post.markdown,
       post: post.post,
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const ns = new NotionService();
+  const posts = await ns.getPublishedBlogPosts();
+  const paths = posts.map((post) => {
+    return `/blog/${post.slug}`;
+  });
+
+  return {
+    paths,
+    fallback: "blocking",
   };
 };

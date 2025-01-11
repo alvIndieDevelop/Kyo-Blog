@@ -7,7 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const readableDate = (dateString: string): string => {
-  console.log(dateString);
   const toDate = new Date(dateString);
   return format(toDate, "dd-MMMM-yyyy");
 };

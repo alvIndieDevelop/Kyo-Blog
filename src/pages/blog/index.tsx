@@ -27,8 +27,6 @@ export default function Blog({
     ),
   ];
 
-  console.log(uniqueCategories);
-
   const handleTagSelect = (tag: string) => {
     setSelectedTags((prev) =>
       prev.includes(tag)
@@ -148,11 +146,9 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     posts = await notionServices.getPublishedBlogPosts();
   } catch (error) {
-    console.error(error);
+    console.error("ERROR:", error);
     posts = [];
   }
-
-  console.log(posts);
 
   return {
     props: {
